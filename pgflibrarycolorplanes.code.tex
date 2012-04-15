@@ -1,0 +1,320 @@
+% Color planes shading library
+% Copyright (c) 2012 Sergiu Dotenco
+
+% H 1.0 1.0
+\pgfdeclarefunctionalshading{H plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{100bp}{100bp}}{}{
+  % x y
+  pop 50.0 div %
+  .5 add % start at 0 degrees
+  1.0 1.0 % x 1.0 1.0
+  % C version to use as model:
+  % h' = fmod(6*h,6)
+  % c1 = floor(h')
+  % c2 = h' - c1
+  % x = (1.0 - s) * v
+  % y = (1.0 - (s * c2)) * v
+  % z = (1.0 - (S * (1.0 - c2))) * v
+  3 -1 roll % s v h
+  6.0 mul % h *= 6
+  6.0 2 copy div floor mul sub % h'=fmod(6*h,6) => s v h'
+  dup 4 1 roll % h' s v h'
+  floor cvr % h' s v c1
+  dup 5 1 roll % c1 h' s v c1
+  3 index sub neg % c1 h' s v c2
+  1.0 3 index sub % c1 h' s v c2 (1.0 - s)
+  2 index mul % c1 H' S V f x
+  6 1 roll % x i H' S V c2
+  dup 3 index mul neg 1.0 add % P i H' S V f ( 1.0 - (f*S))
+  2 index mul % P i H' S V f Q
+  7 1 roll % Q P i H' S V f
+  neg 1.0 add % Q P i H' S V (1.0 - f)
+  2 index mul neg 1.0 add % Q P i H' S V (1.0 - S * (1.0 - f))
+  1 index mul % Q P i H' S V T
+  7 2 roll % V T Q P i H' S
+  pop pop % V T Q P i
+  %%%
+  % end of BLOCK B. The rest is just stack manipulation
+  dup .5 le % TEST II [ i == 0 ]
+  {
+    pop exch pop
+  }
+  { dup 1.5 le % TEST III [ i == 1 ]
+    {
+      pop exch 4 1 roll exch pop
+    }
+    { dup 2.5 le % TEST IV [ i == 2 ]
+      {
+        pop 4 1 roll pop
+      }
+      { dup 3.5 le % TEST V [ i == 3 ]
+        {
+          pop exch 4 2 roll pop
+        }
+        { dup 4.5 le % TEST VI [ i == 4 ]
+          {
+            pop exch pop 3 -1 roll
+          }
+          {
+            pop 3 1 roll exch pop
+          }
+          ifelse
+        }
+        ifelse % for V
+      }
+      ifelse % for IV
+    }
+    ifelse % for III
+  }
+  ifelse % for II
+}
+
+% H S 1.0
+\pgfdeclarefunctionalshading{HS plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{100bp}{100bp}}{}{
+  % x y
+  neg 100.0 add 50.0 div .5 sub  % mirror and normalize the y-coordinate
+  exch 50.0 div .5 add exch % normalize and shift the hue 0 its origin
+  1.0 % x 1.0 1.0
+  % C version to use as model:
+  % h' = fmod(6*h,6)
+  % c1 = floor(h')
+  % c2 = h' - c1
+  % x = (1.0 - s) * v
+  % y = (1.0 - (s * c2)) * v
+  % z = (1.0 - (S * (1.0 - c2))) * v
+  3 -1 roll % s v h
+  6.0 mul % h *= 6
+  6.0 2 copy div floor mul sub % h'=fmod(6*h,6) => s v h'
+  dup 4 1 roll % h' s v h'
+  floor cvr % h' s v c1
+  dup 5 1 roll % c1 h' s v c1
+  3 index sub neg % c1 h' s v c2
+  1.0 3 index sub % c1 h' s v c2 (1.0 - s)
+  2 index mul % c1 H' S V f x
+  6 1 roll % x i H' S V c2
+  dup 3 index mul neg 1.0 add % P i H' S V f ( 1.0 - (f*S))
+  2 index mul % P i H' S V f Q
+  7 1 roll % Q P i H' S V f
+  neg 1.0 add % Q P i H' S V (1.0 - f)
+  2 index mul neg 1.0 add % Q P i H' S V (1.0 - S * (1.0 - f))
+  1 index mul % Q P i H' S V T
+  7 2 roll % V T Q P i H' S
+  pop pop % V T Q P i
+  %%%
+  % end of BLOCK B. The rest is just stack manipulation
+  dup .5 le % TEST II [ i == 0 ]
+  {
+    pop exch pop
+  }
+  { dup 1.5 le % TEST III [ i == 1 ]
+    {
+      pop exch 4 1 roll exch pop
+    }
+    { dup 2.5 le % TEST IV [ i == 2 ]
+      {
+        pop 4 1 roll pop
+      }
+      { dup 3.5 le % TEST V [ i == 3 ]
+        {
+          pop exch 4 2 roll pop
+        }
+        { dup 4.5 le % TEST VI [ i == 4 ]
+          {
+            pop exch pop 3 -1 roll
+          }
+          {
+            pop 3 1 roll exch pop
+          }
+          ifelse
+        }
+        ifelse % for V
+      }
+      ifelse % for IV
+    }
+    ifelse % for III
+  }
+  ifelse % for II
+}
+
+% H L 1.0
+\pgfdeclarefunctionalshading{HL plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{100bp}{100bp}}{}{
+  % x y
+  50 div .5 sub  % mirror and normalize the y-coordinate
+  exch 50 div .5 add exch % normalize and shift the hue 0 its origin
+  1.0 % x 1.0 1.0
+  3 -1 roll % l s h
+  6.0 mul % h *= 6
+  6.0 2 copy div floor mul sub % h = fmod(h, 6)
+  dup % l s h h
+  floor cvr % l s h c1
+  dup % l s h c1 c1
+  3 1 roll sub % l s c1 c2
+  4 2 roll exch % c1 c2 s l
+  dup 0.5 le % (L <= 0.5) ? (S * L) : (S * (1 - L))
+  { 2 copy mul }
+  { dup neg 1 add 2 index mul }
+  ifelse % c1 c2 s l d
+  2 copy % c1 c2 s l d l d
+  add % c1 c2 s l d w
+  3 1 roll % c1 c2 s w l d
+  sub % c1 c2 s w x
+  3 -1 roll pop % c1 c2 w x
+  2 copy % c1 c2 w x w x
+  5 2 roll % c1 w x c2 w x
+  sub mul dup % c1 w x a a
+  3 index exch sub % c1 w x a y
+  3 1 roll % c1 w y x a
+  1 index exch add % c1 w y x z
+  5 -1 roll % w y x z c1
+  % end of BLOCK B. The rest is just stack manipulation
+  dup .5 le % TEST II [ i == 0 ]
+  {
+    pop % w y x z
+    3 1 roll % w z y x
+    exch pop % w z x
+  }
+  { dup 1.5 le % TEST III [ i == 1 ]
+    {
+      pop pop % w y x
+      3 1 roll % x w y
+      exch % x y w
+      3 -1 roll % y w x
+    }
+    { dup 2.5 le % TEST IV [ i == 2 ]
+      {
+        pop % w y x z
+        3 -1 roll pop % w x z
+        3 -1 roll exch % x w z
+      }
+      { dup 3.5 le % TEST V [ i == 3 ]
+        {
+          pop pop % w y x
+          3 -2 roll % x w y
+          exch % x y w
+        }
+        { dup 4.5 le % TEST VI [ i == 4 ]
+          {
+            pop % w y x z
+            3 -1 roll % w x z y
+            pop % w x z
+            3 -2 roll % z w x
+            exch % z x w
+          }
+          {
+            pop % w y x z
+            pop % w y x
+            exch % w x y
+          }
+          ifelse
+        }
+        ifelse % for V
+      }
+      ifelse % for IV
+    }
+    ifelse % for III
+  }
+  ifelse % for II
+}
+
+% R G 1.0
+\pgfdeclarefunctionalshading{RG plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div exch
+  50.0 div exch
+  1.0
+}
+
+\pgfdeclarefunctionalshading{RB plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div exch
+  50.0 div exch
+  1.0 exch
+}
+
+\pgfdeclarefunctionalshading{GB plane}
+  {\pgfpoint{0bp}{0bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div exch
+  50.0 div exch
+  1.0
+  3 1 roll
+}
+
+\pgfdeclarefunctionalshading{CbCr plane}
+  {\pgfpoint{-50bp}{-50bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div 255 mul 127 add exch
+  50.0 div 255 mul 127 sub exch
+  64
+  3 1 roll % .5 Cb Cr
+  % calculate the red component
+  298.082 3 index mul 256 div
+  408.583 2 index mul 256 div add
+  222.921 sub cvr 255 div % Y' Cb Cr R
+  % calculate the green component
+  298.082 4 index mul 256 div
+  100.291 4 index mul 256 div sub
+  208.120 3 index mul 256 div sub
+  135.576 add cvr 255 div % Y' Cb Cr R G
+  % calculate the blue component
+  298.082 5 index mul 256 div
+  516.412 5 index mul 256 div add
+  276.836 add cvr 255 div % Y' Cb Cr R G B
+  6 3 roll pop pop pop
+}
+
+\pgfdeclarefunctionalshading{UV plane}
+  {\pgfpoint{-50bp}{-50bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div exch
+  50.0 div exch
+  .5
+  3 1 roll % .5 I Q
+  % calculate the red component
+  2 index 0 3 index mul add 1.28033 2 index mul add % Y I Q R
+  % calculate the green component
+  3 index -0.21482 4 index mul add -0.38059 3 index mul add % Y I Q R G
+  % calculate the blue component
+  4 index 2.12798 5 index mul add 0 4 index mul add % Y I Q R G B
+  6 3 roll pop pop pop
+}
+
+\pgfdeclarefunctionalshading{IQ plane}
+  {\pgfpoint{-50bp}{-50bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  50.0 div exch
+  50.0 div exch
+  .5
+  3 1 roll % .5 I Q
+  % calculate the red component
+  2 index 0.9563 3 index mul add 0.6210 2 index mul add % Y I Q R
+  % calculate the green component
+  3 index -0.2721 4 index mul add -0.6474 3 index mul add % Y I Q R G
+  % calculate the blue component
+  4 index -1.1070 5 index mul add 1.7046 4 index mul add % Y I Q R G B
+  6 3 roll pop pop pop
+}
+
+\pgfdeclarefunctionalshading{DbDr plane}
+  {\pgfpoint{-50bp}{-50bp}}
+  {\pgfpoint{50bp}{50bp}}{}{
+  25.0 div exch
+  25.0 div exch
+  .5
+  3 1 roll % .5 I Q
+  % calculate the red component
+  2 index 0.000092303716148 3 index mul add -0.525912630661865 2 index mul add % Y I Q R
+  % calculate the green component
+  3 index -0.129132898890509 4 index mul add 0.267899328207599 3 index mul add % Y I Q R G
+  % calculate the blue component
+  4 index 0.664679059978955 5 index mul add -0.000079202543533 4 index mul add % Y I Q R G B
+  6 3 roll pop pop pop
+}
+

@@ -1,0 +1,102 @@
+\documentclass{scrartcl}
+\usepackage{pgfplots}
+\usepackage{tikz}
+
+\usetikzlibrary{colorplanes}
+\usepgfplotslibrary{groupplots}
+
+\pgfplotsset{compat=newest}
+
+\begin{document}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size={2 by 5},
+  horizontal sep=1.5cm,vertical sep=2.25cm},width=7cm,height=3cm]
+  \nextgroupplot
+  [
+    title={$H$ color plane ($V=1$)},
+    axis background/.style={shading=H plane},xmin=0,xmax=360,ymin=0,ymax=1,
+    xlabel={$H$},ylabel={$S=1$},ytick=\empty,
+    xtick={0,60,120,...,360},xticklabel={%
+      \pgfmathfloatparsenumber{\tick}%
+      $\pgfmathprintnumber{\pgfmathresult}^{\circ}$%
+    }
+  ]
+
+  \nextgroupplot
+  [
+    title={$HS$ color plane ($V=1$)},
+    axis background/.style={shading=HS plane},xmin=0,xmax=360,ymin=0,ymax=1,
+    xlabel={$H$},ylabel={$S$},ytick={0,.5,1},
+    xtick={0,60,120,...,360},xticklabel={%
+      \pgfmathfloatparsenumber{\tick}%
+      $\pgfmathprintnumber{\pgfmathresult}^{\circ}$%
+    }
+  ]
+
+  \nextgroupplot
+  [
+    title={$HL$ color plane ($S=1$)},
+    axis background/.style={shading=HL plane},xmin=0,xmax=360,ymin=0,ymax=1,
+    xlabel={$H$},ylabel={$L$},ytick={0,.5,1},
+    xtick={0,60,120,...,360},xticklabel={%
+      \pgfmathfloatparsenumber{\tick}%
+      $\pgfmathprintnumber{\pgfmathresult}^{\circ}$%
+    }
+  ]
+
+  \nextgroupplot
+  [
+    title={$RG$ color plane ($B=1$)},
+    axis background/.style={shading=RG plane},xmin=0,xmax=1,ymin=0,ymax=1,
+    xlabel={$R$},ylabel={$G$},ytick={0,.5,1}, xtick={0,.5,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$RB$ color plane ($G=1$)},
+    axis background/.style={shading=RB plane},xmin=0,xmax=1,ymin=0,ymax=1,
+    xlabel={$R$},ylabel={$B$},ytick={0,.5,1}, xtick={0,.5,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$GB$ color plane ($R=1$)},
+    axis background/.style={shading=GB plane},xmin=0,xmax=1,ymin=0,ymax=1,
+    xlabel={$G$},ylabel={$B$},ytick={0,.5,1}, xtick={0,.5,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$C_bC_r$ color plane ($Y=0.5$)},
+    axis background/.style={shading=CbCr plane},xmin=-1,xmax=1,ymin=-1,ymax=1,
+    xlabel={$C_b$},ylabel={$C_r$},ytick={-1,0,1}, xtick={-1,0,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$UV$ color plane ($Y=0.5$)},
+    axis background/.style={shading=UV plane},xmin=-1,xmax=1,ymin=-1,ymax=1,
+    xlabel={$U$},ylabel={$V$},ytick={-1,0,1}, xtick={-1,0,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$IQ$ color plane ($Y=0.5$)},
+    axis background/.style={shading=IQ plane},xmin=-1,xmax=1,ymin=-1,ymax=1,
+    xlabel={$I$},ylabel={$Q$},ytick={-1,0,1}, xtick={-1,0,1}
+  ]
+
+  \nextgroupplot
+  [
+    title={$D_bD_r$ color plane ($Y=0.5$)},
+    axis background/.style={shading=DbDr plane},xmin=-2,xmax=2,ymin=-2,ymax=2,
+    xlabel={$D_b$},ylabel={$D_r$},ytick={-2,0,2}, xtick={-2,0,2}
+  ]
+\end{groupplot}
+\end{tikzpicture}
+\end{figure}
+
+\end{document}
