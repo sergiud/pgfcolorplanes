@@ -1,4 +1,4 @@
-\documentclass{scrartcl}
+\documentclass[tikz]{standalone}
 \usepackage{pgfplots}
 \usepackage{tikz}
 
@@ -8,9 +8,6 @@
 \pgfplotsset{compat=newest}
 
 \begin{document}
-
-\begin{figure}
-\centering
 \begin{tikzpicture}
 \begin{groupplot}[group style={group size={2 by 5},
   horizontal sep=1.5cm,vertical sep=2.25cm},width=7cm,height=3cm]
@@ -97,6 +94,4 @@
   ]
 \end{groupplot}
 \end{tikzpicture}
-\end{figure}
-
 \end{document}
