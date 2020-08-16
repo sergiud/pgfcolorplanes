@@ -1,0 +1,18 @@
+.compile_template: &compile_definition
+  script:
+    - latexmk
+  stage: build
+  artifacts:
+    paths:
+      - "*.pdf"
+
+stages:
+    - build
+
+compile:texlive2019:
+    image: sergiud/texlive:2019
+    <<: *compile_definition
+
+compile:texlive2020:
+    image: sergiud/texlive:2020
+    <<: *compile_definition
